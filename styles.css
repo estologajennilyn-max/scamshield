@@ -1,0 +1,156 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    color: #172536;
+    line-height: 1.6;
+}
+
+header {
+    background: #10243a;
+    color: white;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    margin: 0;
+    color: #20d6b0;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #20d6b0;
+}
+
+section {
+    padding: 45px 7%;
+    scroll-margin-top: 20px;
+}
+
+h2 {
+    color: #102f49;
+}
+
+.hero {
+    background: #102f49;
+    color: white;
+    text-align: center;
+    padding: 80px 7%;
+}
+
+.hero h2 {
+    color: #20d6b0;
+    font-size: 35px;
+}
+
+.hero p {
+    margin-bottom: 30px;
+}
+
+.button {
+    display: inline-block;
+    background: #20d6b0;
+    color: #10243a;
+    padding: 12px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    margin: 18px 0;
+    border-radius: 10px;
+    border: 1px solid #dce5ec;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    color: #137d77;
+}
+
+button {
+    background: #137d77;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 11px 15px;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0d5c58;
+}
+
+label {
+    display: block;
+    margin: 12px 0;
+}
+
+textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 12px;
+    border: 1px solid #cbd5df;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+}
+
+#simResult,
+#quizResult,
+#analysisResult {
+    margin-top: 18px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+footer {
+    background: #10243a;
+    color: white;
+    text-align: center;
+    padding: 25px 10px;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .hero h2 {
+        font-size: 27px;
+    }
+
+    section {
+        padding: 30px 5%;
+    }
+
+    button {
+        max-width: 100%;
+    }
+}

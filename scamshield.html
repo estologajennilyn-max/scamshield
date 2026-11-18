@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScamShield | Scam Awareness</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>🛡 ScamShield</h1>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#simulator">Scam Simulator</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#checker">Message Checker</a>
+        <a href="#learn">Learn</a>
+        <a href="#progress">My Progress</a>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <h2>Learn to Spot Scams & Stay Safe Online</h2>
+    <p>Practice identifying online scams and protect yourself from fraud.</p>
+    <a href="#simulator" class="button">Start Learning</a>
+</section>
+
+<section id="simulator">
+    <h2>Scam Simulator</h2>
+    <p>Read the message and choose the safest action.</p>
+
+    <div class="card">
+        <h3>📩 Fictional Bank Message</h3>
+        <p>
+            "URGENT! Your bank account will be blocked in 10 minutes.
+            Click this unfamiliar link and enter your password and OTP."
+        </p>
+
+        <button onclick="checkScam(true)">
+            Avoid the link and contact the bank officially
+        </button>
+
+        <button onclick="checkScam(false)">
+            Click the link and enter my OTP
+        </button>
+
+        <p id="simResult"></p>
+    </div>
+</section>
+
+<section id="quiz">
+    <h2>Scam Detection Quiz</h2>
+
+    <div class="card">
+        <p><strong>What is a warning sign of an online scam?</strong></p>
+
+        <label>
+            <input type="radio" name="answer" value="wrong">
+            A website provides clear contact information.
+        </label>
+
+        <label>
+            <input type="radio" name="answer" value="correct">
+            A stranger asks for your password and OTP.
+        </label>
+
+        <label>
+            <input type="radio" name="answer" value="wrong">
+            You verify an offer through an official website.
+        </label>
+
+        <br>
+        <button onclick="checkQuiz()">Check Answer</button>
+        <p id="quizResult"></p>
+    </div>
+</section>
+
+<section id="checker">
+    <h2>Suspicious Message Checker</h2>
+    <p>Paste a message to look for common scam warning signs.</p>
+
+    <div class="card">
+        <textarea id="message" placeholder="Paste a sample message here..."></textarea>
+        <br>
+        <button onclick="analyzeMessage()">Analyze Message</button>
+        <p id="analysisResult"></p>
+        <small>
+            Educational checker only. Do not enter passwords, bank details,
+            or real OTPs. This tool cannot confirm whether a message is genuine.
+        </small>
+    </div>
+</section>
+
+<section id="learn">
+    <h2>Learn About Scams</h2>
+
+    <div class="card">
+        <h3>🎣 Phishing Scams</h3>
+        <p>Fake messages or websites designed to steal personal information.</p>
+        <p><strong>Stay safe:</strong> Check links and verify messages independently.</p>
+    </div>
+
+    <div class="card">
+        <h3>🛍 Fake Online Stores</h3>
+        <p>Fraudulent shops may advertise products at unbelievable prices.</p>
+        <p><strong>Stay safe:</strong> Research the seller and use protected payment methods.</p>
+    </div>
+
+    <div class="card">
+        <h3>💼 Job Scams</h3>
+        <p>Fraudsters may offer fake jobs and demand advance payments.</p>
+        <p><strong>Stay safe:</strong> Verify the employer and never pay to secure a job.</p>
+    </div>
+
+    <div class="card">
+        <h3>📈 Investment Scams</h3>
+        <p>Fake investments may promise guaranteed or unusually high returns.</p>
+        <p><strong>Stay safe:</strong> Check registration and never trust guaranteed profits.</p>
+    </div>
+
+    <div class="card">
+        <h3>👤 Impersonation Scams</h3>
+        <p>Scammers pretend to be bank staff, officials, friends, or relatives.</p>
+        <p><strong>Stay safe:</strong> Contact the person using a number you already trust.</p>
+    </div>
+
+    <div class="card">
+        <h3>📦 Marketplace Scams</h3>
+        <p>Fake buyers or sellers may send false payment confirmations or links.</p>
+        <p><strong>Stay safe:</strong> Verify payments in your official account.</p>
+    </div>
+</section>
+
+<section id="progress">
+    <h2>My Progress</h2>
+
+    <div class="card">
+        <p>Simulation points: <strong id="simScore">0</strong></p>
+        <p>Quiz points: <strong id="quizScore">0</strong></p>
+        <p>Total points: <strong id="totalScore">0</strong></p>
+
+        <h3>Achievements</h3>
+        <p id="achievement">🔒 Scam Spotter — Complete a simulation correctly.</p>
+        <p id="quizAchievement">🔒 Quiz Master — Answer the quiz correctly.</p>
+
+        <button onclick="resetProgress()">Reset Progress</button>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 ScamShield | Scam Awareness and Prevention</p>
+    <p>Think before you click. Verify before you trust.</p>
+</footer>
+
+<script>
+    let simulationPoints = Number(localStorage.getItem("simPoints")) || 0;
+    let quizPoints = Number(localStorage.getItem("quizPoints")) || 0;
+    let simulationCompleted = localStorage.getItem("simCompleted") === "true";
+    let quizCompleted = localStorage.getItem("quizCompleted") === "true";
+
+    function updateProgress() {
+        document.getElementById("simScore").textContent = simulationPoints;
+        document.getElementById("quizScore").textContent = quizPoints;
+        document.getElementById("totalScore").textContent =
+            simulationPoints + quizPoints;
+
+        document.getElementById("achievement").textContent =
+            simulationCompleted
+                ? "🏆 Scam Spotter — Unlocked!"
+                : "🔒 Scam Spotter — Complete a simulation correctly.";
+
+        document.getElementById("quizAchievement").textContent =
+            quizCompleted
+                ? "🏆 Quiz Master — Unlocked!"
+                : "🔒 Quiz Master — Answer the quiz correctly.";
+    }
+
+    function checkScam(safe) {
+        const result = document.getElementById("simResult");
+
+        if (safe) {
+            result.textContent =
+                "Correct! Never use suspicious links. Verify through the bank's official app or contact details.";
+
+            if (!simulationCompleted) {
+                simulationPoints += 10;
+                simulationCompleted = true;
+                localStorage.setItem("simPoints", simulationPoints);
+                localStorage.setItem("simCompleted", "true");
+            }
+        } else {
+            result.textContent =
+                "Incorrect. Never share your password or OTP through a suspicious link.";
+        }
+
+        updateProgress();
+    }
+
+    function checkQuiz() {
+        const answer = document.querySelector(
+            'input[name="answer"]:checked'
+        );
+        const result = document.getElementById("quizResult");
+
+        if (!answer) {
+            result.textContent = "Please select an answer first.";
+            return;
+        }
+
+        if (answer.value === "correct") {
+            result.textContent =
+                "Correct! Password and OTP requests are serious warning signs.";
+
+            if (!quizCompleted) {
+                quizPoints += 10;
+                quizCompleted = true;
+                localStorage.setItem("quizPoints", quizPoints);
+                localStorage.setItem("quizCompleted", "true");
+            }
+        } else {
+            result.textContent =
+                "Not quite. Never share passwords or OTPs with strangers.";
+        }
+
+        updateProgress();
+    }
+
+    function analyzeMessage() {
+        const message = document.getElementById("message").value.trim();
+        const result = document.getElementById("analysisResult");
+
+        if (!message) {
+            result.textContent = "Please enter a sample message.";
+            return;
+        }
+
+        const warnings = [];
+
+        if (/urgent|immediately|within \d+ minutes|act now|expires today/i.test(message)) {
+            warnings.push("Urgent language or pressure to act quickly");
+        }
+
+        if (/password|one.time pin|\botp\b|verification code/i.test(message)) {
+            warnings.push("Request or mention of sensitive login information");
+        }
+
+        if (/click here|bit\.ly|tinyurl|free prize|claim your prize/i.test(message)) {
+            warnings.push("Suspicious link or tempting offer");
+        }
+
+        if (/send money|transfer funds|pay a fee|advance payment/i.test(message)) {
+            warnings.push("Request for money or payment");
+        }
+
+        if (warnings.length > 0) {
+            result.innerHTML =
+                "<strong>⚠ Warning signs found:</strong><br>" +
+                warnings.map(warning => "• " + warning).join("<br>") +
+                "<br><br>Verify the message independently before taking action.";
+        } else {
+            result.textContent =
+                "No common warning patterns were detected. This does not mean the message is safe. Verify the sender and any links independently.";
+        }
+    }
+
+    function resetProgress() {
+        if (confirm("Are you sure you want to reset your progress?")) {
+            simulationPoints = 0;
+            quizPoints = 0;
+            simulationCompleted = false;
+            quizCompleted = false;
+
+            localStorage.removeItem("simPoints");
+            localStorage.removeItem("quizPoints");
+            localStorage.removeItem("simCompleted");
+            localStorage.removeItem("quizCompleted");
+
+            document.getElementById("simResult").textContent = "";
+            document.getElementById("quizResult").textContent = "";
+            updateProgress();
+        }
+    }
+
+    updateProgress();
+</script>
+
+</body>
+</html>
